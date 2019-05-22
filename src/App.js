@@ -1,23 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
+import Index from './pages/index.md';
 import './App.css';
+import Markdown from 'markdown-to-jsx';
+import Zone     from './Zone';
+import ClientSpecificContentComponent from './ClientSpecificContentComponent'
 
 function App() {
+    console.log(JSON.stringify(Index));
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <Markdown
+            children={Index}
+            options={{
+                overrides: {
+                    GEO: {
+                        component: Zone, // Replaces tag with specified component
+                    },
+                    Client: {
+                        component: ClientSpecificContentComponent // supports custom component name
+                    }
+                },
+            }}
+        />
       </header>
     </div>
   );
